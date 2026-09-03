@@ -45,7 +45,12 @@ To start in a specific QA state, add launch arguments to the scheme: `-AF_SIGNAL
 
 ## Verification
 
-(filled in after CI has reported)
+Stated separately so none of it can be mistaken for the others:
+
+- **Compiles for the iOS Simulator, against the package resolved from GitHub — yes.** This repo's [CI](https://github.com/rajatslakhina/adaptive-friction-kit-demo-app/actions) runs on `macos-15`: `xcodebuild -resolvePackageDependencies` (which fetches `adaptive-friction-kit` from GitHub at the newest `1.x` tag — the "Show resolved version" step prints the exact tag and commit), then `xcodebuild build -scheme Demo -destination 'generic/platform=iOS Simulator'` with signing disabled. The first run on this repository passed; every later push re-runs it.
+- **Ran on an iOS Simulator — no.** Not by the run that produced this repository (see [Screenshots](#screenshots)). The library's own tests (51, on Linux) exercise the policy that the screen drives, including the default-state trace this README describes; the screen itself has been compiled, not launched.
+- **The real Trust Insights framework — not linked.** The evaluator behind the pickers is the library's `SimulatedInsightSource`; the real adapter's shape is sketched in the library README and is not compiled anywhere.
+- **`project.pbxproj` was written by hand** and machine-checked before pushing: balanced braces (33/33) and parentheses (24/24), 22 object ids all defined, none dangling, `objectVersion = 60`, and the shared `Demo.xcscheme` references the app target's id.
 
 ## Library
 
